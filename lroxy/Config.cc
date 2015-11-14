@@ -10,6 +10,7 @@
 using std::map;
 using std::string;
 using std::ifstream;
+using muduo::net::InetAddress;
 
 map<string, muduo::Logger::LogLevel> Config::logLevelMap = makeLogLevelMap();
 
@@ -26,7 +27,13 @@ map<string, muduo::Logger::LogLevel> Config::makeLogLevelMap()
 }
 
 Config::Config(const string& configPath)
-  :	maxLine(1024)
+  :	maxLine(1024),
+  	ip_(string()),
+  	port_(5555),
+  	inetAddress_(),
+  	numThreads_(0),
+  	maxNumClients_(10),
+  	logLevel_(muduo::Logger::INFO)
 {
 	ifstream file(configPath);
 
@@ -50,25 +57,27 @@ void Config::praseConfig(ifstream& file)
 		praseLine(str.get(), cmap);
 	}
 
+	if (cmap.find("listenIp") != cmap.end() && cmap["listenIp"] != "INADDR_ANY")
+	{
+		ip_ = cmap["listenIp"];
+	}
+
 	if (cmap.find("listenPort") != cmap.end())
 		port_ = static_cast<uint16_t>(atoi(cmap["listenPort"].c_str()));
-	else
-		port_ = 5555;
 
 	if (cmap.find("maxNumClients") != cmap.end())
 		maxNumClients_ = atoi(cmap["maxNumClients"].c_str());
-	else
-		maxNumClients_ = 10;
 
 	if (cmap.find("numThreads") != cmap.end())
 		numThreads_ = atoi(cmap["numThreads"].c_str());
-	else
-		numThreads_  = 1;
 
 	if (cmap.find("logLevel") != cmap.end())
 		logLevel_ = logLevelMap[cmap["logLevel"]];
+
+	if (ip_.empty())
+		inetAddress_ = InetAddress(port_);
 	else
-		logLevel_ = muduo::Logger::INFO;
+		inetAddress_ = InetAddress(ip_, port_);
 }
 
 void Config::praseLine(char* str, map<string, string>& cmap)

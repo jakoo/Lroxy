@@ -1,0 +1,21 @@
+#config file of lroxy
+
+#listen IP, INADDR_ANY by default
+#format: *.*.*.*
+listenIp = INADDR_ANY;
+
+#listen port, 5555 by default
+listenPort = 5555;
+
+#maximum concurrency (include CONNECT and BIND), 10 by default
+maxNumClients = 1000;
+
+# num of threads, 0 by default
+# 0 means all I/O in one thread. This is the default value.
+# 1 means all I/O in another thread except accept().
+# N means all I/O in N threads except accept().
+numThreads = 0;
+
+#log level: TRACE, DEBUG, INFO, WARN, ERROR, FATAL
+#INFO by default
+logLevel = DEBUG;
