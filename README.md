@@ -11,19 +11,13 @@ $ ./socks4 [config file path]
 
 Search config file in current dir by default.  
 There is a defalt config in [makefile dir](https://github.com/jakoo/Lroxy/blob/master/makefile/config).
-   
-   
-Has been tested in behind environment:
 
-Linux 3.19.8
+My environment:  
+Linux 3.19.8  
+g++ (GCC) 4.8.3  
+boost 1.54.0  
 
-g++ (GCC) 4.8.3
-
-boost 1.54.0
-######To do list:
-1.Not fully tested yet. BIND method isn't tested.
-
-2.Add support to Socks4a.
+Hasn't been fully tested yet.
 
 ######License:
 Copyright (c) 2015, Jiehong Zhang. All rights reserved.
