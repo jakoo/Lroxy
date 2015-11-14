@@ -176,11 +176,12 @@ void SocksServer::onConnection(const TcpConnectionPtr& conn)
   	const void* DSTPORT;
   	const void* DSTIP;
 
-  	if (buf->readableBytes() > 128)
+  	/*if (buf->readableBytes() > 128)
   	{
   		conn->forceClose();
   	}
-  	else if (buf->readableBytes() > 8)
+  	else */
+  	if (buf->readableBytes() > 8)
   	{
   		const char* begin = buf->peek() + 8;
   		const char* end = buf->peek() + buf->readableBytes();
@@ -198,8 +199,9 @@ void SocksServer::onConnection(const TcpConnectionPtr& conn)
   			addr.sin_port = *static_cast<const in_port_t*>(DSTPORT);
   			addr.sin_addr.s_addr = *static_cast<const uint32_t*>(DSTIP);
 
-  			bool socks4a = sockets::networkToHost32(addr.sin_addr.s_addr) < 256;
-  			bool okay = false;
+  			//bool socks4a = sockets::networkToHost32(addr.sin_addr.s_addr) < 256;
+  			bool okay = true;
+  			/*
   			if (socks4a)
   			{
   				const char* endOfHostName = std::find(where+1, end, '\0');
@@ -224,7 +226,7 @@ void SocksServer::onConnection(const TcpConnectionPtr& conn)
   			{
   				okay = true;
   			}
-
+			*/
   			InetAddress inetAddr(addr);
   			if (VN == 4 && CD == 1 && okay)
   			{
