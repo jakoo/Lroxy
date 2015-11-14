@@ -18,4 +18,4 @@ numThreads = 0;
 
 #log level: TRACE, DEBUG, INFO, WARN, ERROR, FATAL
 #INFO by default
-logLevel = DEBUG;
+logLevel = INFO;
