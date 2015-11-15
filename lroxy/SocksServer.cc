@@ -58,7 +58,7 @@ bool SocksServer::delTunnel(const string& tunnelName)
 {
 	TunnelMap::iterator it = primaryTunnels_.find(tunnelName);
 
-	if (it == primaryTunnels_.end()) // tunnle doesn't exit
+	if (it == primaryTunnels_.end()) // tunnle doesn't exist
 		return false;
 
 	primaryTunnels_.erase(it);
@@ -96,14 +96,10 @@ void SocksServer::onConnection(const TcpConnectionPtr& conn)
   	{
   		--numClients_;
 
-  		try
+  		if (!conn->getContext().empty())
   		{
   			TunnelPtr tunnel = any_cast<TunnelPtr>(conn->getContext());
   			tunnel->close(); // appServerConn will be closed by TcpClient/TcpServer destructor
-  		}
-  		catch (const boost::bad_any_cast& e)
-  		{
-
   		}
   	}
   }

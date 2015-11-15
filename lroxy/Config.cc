@@ -32,7 +32,7 @@ Config::Config(const string& configPath)
   	port_(5555),
   	inetAddress_(),
   	numThreads_(0),
-  	maxNumClients_(10),
+  	maxNumClients_(1000),
   	logLevel_(muduo::Logger::INFO)
 {
 	ifstream file(configPath);
